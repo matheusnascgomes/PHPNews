@@ -1,9 +1,7 @@
 <?php namespace PHPNews\User;
 
 use PHPNews\Core\Model;
-use PHPNews\Core\CoreAuthentication;
 use PHPNews\DB\Sql;
-
 
 class UserHandler extends Model{
 
