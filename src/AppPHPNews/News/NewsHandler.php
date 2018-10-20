@@ -53,9 +53,8 @@ class NewsHandler extends Model{
         if(empty($results))
             throw new \Exception("", 1);
 
-        foreach($results as &$img){
+        foreach($results as &$img)
             $img['image_uri'] = UPLOAD_URL.'news/'.$img['image_uri'];
-        }
             
         return $results;
     }
@@ -69,9 +68,8 @@ class NewsHandler extends Model{
         if(empty($results))
             throw new \Exception("", 1);
 
-        foreach($results as &$img){
+        foreach($results as &$img)
             $img['image_uri'] = UPLOAD_URL.'news/'.$img['image_uri'];
-        }
             
         return $results[0];
     }
