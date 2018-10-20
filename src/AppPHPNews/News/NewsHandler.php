@@ -1,34 +1,39 @@
 <?php namespace PHPNews\News;
 
-use PHPNews\Core\Model;
 use PHPNews\DB\Sql;
+use PHPNews\Core\Model;
+use PHPNews\Core\ImageHandler;
 
 class NewsHandler extends Model{
 
     public function register(){
 
-        $imageUri = '';
+        $imageHandler = new ImageHandler;
+        $strFile = $imageHandler->upload($this->getFiles()['Image'], 'news');
 
-        (new Sql)->query("INSERT INTO news (title, post, image_uri) 
+        $objSql = new Sql;
+
+        $objSql->query("INSERT INTO news (title, post) 
         VALUES (:title, :post, :image_uri)",[
             ':title' => $this->getTitle(),
-            ':post' => $this->getPost(),
-            ':image_uri' => $imageUri,
+            ':post' => $this->getPost()
         ]);
+
+        $newsId = $objSql->getLastId();
+
+        $newName = $imageHandler->renameImageOnServer($strFile, $newsId, 'news');
+        $this->storesNewImageName($newsId, $newName);
     }
 
     public function update(){
 
-        $imageUri = '';
-
         $this->showLine();
 
-        (new Sql)->query("UPDATE news SET title = :title, post = :post, image_uri = :image_uri
+        (new Sql)->query("UPDATE news SET title = :title, post = :post
         WHERE id = :id",[
             ':id' => $this->getId(),
             ':title' => $this->getTitle(),
-            ':post' => $this->getPost(),
-            ':image_uri' => $imageUri,
+            ':post' => $this->getPost()
         ]);
     }
 
@@ -61,5 +66,13 @@ class NewsHandler extends Model{
             throw new \Exception("", 1);
             
         return $results[0];
+    }
+
+    public function storesNewImageName($id, $newImageName){
+
+        (new Sql)->query("UPDATE news SET image_uri = :image_uri WHERE id = :id",[
+            ':id'=>$id,
+            ':image'=>$newImageName,
+        ]);
     }
 }

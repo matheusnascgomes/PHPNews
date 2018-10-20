@@ -7,8 +7,10 @@ $app->post('/news/register',function(){
 
     $newsHandler = new NewsHandler;
     $newsHandler->setData($_POST);
+    $newsHandler->setFiles($_FILES);
 
     try{
+
         (new ServerResponse(0, "Postagem registrada com sucesso", $newsHandler->register()))->getServerResponse();
 
     }catch(\Exception $objEx){
