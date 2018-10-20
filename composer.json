@@ -1,0 +1,17 @@
+{
+    "name": "matheus/offdriverweb_back",
+    "authors": [
+        {
+            "name": "Matheus Gomes",
+            "email": "matheusnascgomes@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPNews\\": "src\\AppPHPNews"
+        }
+    }
+}
