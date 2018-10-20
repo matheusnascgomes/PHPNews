@@ -14,7 +14,7 @@ class NewsHandler extends Model{
         $objSql = new Sql;
 
         $objSql->query("INSERT INTO news (title, post) 
-        VALUES (:title, :post, :image_uri)",[
+        VALUES (:title, :post)",[
             ':title' => $this->getTitle(),
             ':post' => $this->getPost()
         ]);
@@ -52,6 +52,10 @@ class NewsHandler extends Model{
 
         if(empty($results))
             throw new \Exception("", 1);
+
+        foreach($results as &$img){
+            $img['image_uri'] = UPLOAD_URL.'news/'.$img['image_uri'];
+        }
             
         return $results;
     }
@@ -64,6 +68,10 @@ class NewsHandler extends Model{
 
         if(empty($results))
             throw new \Exception("", 1);
+
+        foreach($results as &$img){
+            $img['image_uri'] = UPLOAD_URL.'news/'.$img['image_uri'];
+        }
             
         return $results[0];
     }
@@ -72,7 +80,7 @@ class NewsHandler extends Model{
 
         (new Sql)->query("UPDATE news SET image_uri = :image_uri WHERE id = :id",[
             ':id'=>$id,
-            ':image'=>$newImageName,
+            ':image_uri'=>$newImageName,
         ]);
     }
 }
