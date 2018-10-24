@@ -1,4 +1,7 @@
 <?php namespace PHPNews\Core;
+
+use PHPNews\Core\ServerResponse;
+
 class ServerResponseException{
 
     public function __construct($intErrorCode, $strErrorMessage, \Exception $objEx = null){

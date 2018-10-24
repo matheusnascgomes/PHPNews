@@ -22,7 +22,7 @@ class Sql {
 		$this->conn->exec("SET time_zone = 'America/Recife'");
 	}
 
-	private function setParams($statement, $parameters = array()){
+	private function setParams($statement, $parameters = []){
 
 		foreach ($parameters as $key => $value) {
 			$this->bindParam($statement, $key, $value);
@@ -34,14 +34,14 @@ class Sql {
 		$statement->bindParam($key, $value);
 	}
 
-	public function query($rawQuery, $params = array()){
+	public function query($rawQuery, $params = []){
 
 		$stmt = $this->conn->prepare($rawQuery);
 		$this->setParams($stmt, $params);
         $stmt->execute();        
 	}
 
-	public function select($rawQuery, $params = array()):array{
+	public function select($rawQuery, $params = []):array{
 
 		$stmt = $this->conn->prepare($rawQuery);
 		$this->setParams($stmt, $params);
@@ -49,11 +49,9 @@ class Sql {
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
-
 	public function getLastId(){
 		return $this->conn->lastInsertId(); 
 	}
-
 }
 
  ?>

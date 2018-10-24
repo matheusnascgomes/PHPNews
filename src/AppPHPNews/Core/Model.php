@@ -18,7 +18,7 @@ class Model {
                 break;
         }
     }
-
+    
     public function setData($data = []){
         foreach ($data as $key => $value)
             $this->{"set".ucfirst($key)}($value);

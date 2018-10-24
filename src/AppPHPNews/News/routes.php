@@ -1,5 +1,4 @@
 <?php
-
 use PHPNews\Core\{ ServerResponse, ServerResponseException };
 use PHPNews\News\NewsHandler;
 
@@ -11,12 +10,16 @@ $app->post('/news/register',function(){
 
     try{
 
-        (new ServerResponse(0, "Postagem registrada com sucesso", $newsHandler->register()))->getServerResponse();
+        (new ServerResponse(
+            0, 
+            "Postagem registrada com sucesso", 
+            $newsHandler->register())
+        )->getServerResponse();
 
     }catch(\Exception $objEx){
         (new ServerResponseException(
             1001, 
-            'ERRO: Não foi possível registrar a postagem!. Tente novamente mais tarde', 
+            'ERRO: Não foi possível registrar a postagem!', 
             $objEx)
         )->getServerResponse();
     }
@@ -52,6 +55,7 @@ $app->get('/news',function(){
 
     try{
         (new ServerResponse(0, "", (new NewsHandler)->rawList()))->getServerResponse();
+        
     }catch(\Exception $objEx){
         (new ServerResponseException(1001, 'ERRO: Não há dados a serem listados.', $objEx))->getServerResponse();
     }

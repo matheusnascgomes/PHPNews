@@ -20,13 +20,13 @@ class ImageHandler{
 
         $intMaxSize = 5/*MB*/;
         if(($imgInfo['size'] == 0) || ($imgInfo['size'] > $intMaxSize *1024*1024))
-            (new AjaxResponseException(1001, "ERRO: O arquivo excede o tamanho de {$intMaxSize}MB", new \Exception('Img size: '. $imgInfo['size'])))->responderAjax();
+            (new ServerResponseException(1001, "ERRO: O arquivo excede o tamanho de {$intMaxSize}MB", new \Exception('Img size: '. $imgInfo['size'])))->getServerResponse();
 
         if(!in_array($imgInfo['type'], ['image/gif', 'image/jpeg', 'image/jpg', 'image/png']))
-            (new AjaxResponseException(1001, 'ERRO: O arquivo enviado não é uma imagem', new \Exception('Img type: '. $imgInfo['type'])))->responderAjax();
+            (new ServerResponseException(1001, 'ERRO: O arquivo enviado não é uma imagem', new \Exception('Img type: '. $imgInfo['type'])))->getServerResponse();
 
         if(!move_uploaded_file($imgInfo['tmp_name'], $dirName.'/'.$strNewFile))
-            (new AjaxResponseException(1001, 'ERRO: não foi possível efetuar o cadastrado, pois a imagem não pôde ser carregada no servidor. Tente novamente mais tarde', $objEx))->responderAjax();
+            (new ServerResponseException(1001, 'ERRO: não foi possível efetuar o cadastrado, pois a imagem não pôde ser carregada no servidor. Tente novamente mais tarde', $objEx))->getServerResponse();
 
         return $strNewFile;
     }
